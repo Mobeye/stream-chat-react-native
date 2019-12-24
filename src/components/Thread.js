@@ -8,6 +8,7 @@ import styled from '@stream-io/styled-components';
 import { themed } from '../styles/theme';
 
 import { Message } from './Message';
+import { withTranslationAndStatics } from '../utils';
 
 const NewThread = styled.View`
   padding: 8px;
@@ -115,72 +116,76 @@ const Thread = withChannelContext(
   ),
 );
 
-class ThreadInner extends React.PureComponent {
-  static propTypes = {
-    /** Channel is passed via the Channel Context */
-    channel: PropTypes.object.isRequired,
-    /** the thread (just a message) that we're rendering */
-    thread: PropTypes.object.isRequired,
-  };
+const ThreadInner = withTranslationAndStatics()(
+  class ThreadInner extends React.PureComponent {
+    static propTypes = {
+      /** Channel is passed via the Channel Context */
+      channel: PropTypes.object.isRequired,
+      /** the thread (just a message) that we're rendering */
+      thread: PropTypes.object.isRequired,
+    };
 
-  constructor(props) {
-    super(props);
-    this.messageList = React.createRef();
-  }
-
-  async componentDidMount() {
-    const parentID = this.props.thread.id;
-    if (parentID && this.props.thread.reply_count) {
-      await this.props.loadMoreThread();
-    }
-  }
-
-  render() {
-    if (!this.props.thread) {
-      return null;
+    constructor(props) {
+      super(props);
+      this.messageList = React.createRef();
     }
 
-    const read = {};
-    const headerComponent = (
-      <React.Fragment>
-        <Message
-          message={this.props.thread}
-          initialMessage
-          threadList
-          readOnly
-          groupStyles={['single']}
-          Message={this.props.Message}
-          // TODO: remove the following line in next release, since we already have additionalParentMessageProps now.
-          {...this.props}
-          {...this.props.additionalParentMessageProps}
-        />
-        <NewThread>
-          <NewThreadText>Start of a new thread</NewThreadText>
-        </NewThread>
-      </React.Fragment>
-    );
+    async componentDidMount() {
+      const parentID = this.props.thread.id;
+      if (parentID && this.props.thread.reply_count) {
+        await this.props.loadMoreThread();
+      }
+    }
 
-    return (
-      <React.Fragment>
-        <MessageList
-          messages={this.props.threadMessages}
-          HeaderComponent={headerComponent}
-          read={read}
-          threadList
-          loadMore={this.props.loadMoreThread}
-          hasMore={this.props.threadHasMore}
-          loadingMore={this.props.threadLoadingMore}
-          Message={this.props.Message}
-          {...this.props.additionalMessageListProps}
-        />
-        <MessageInput
-          parent={this.props.thread}
-          focus={this.props.autoFocus}
-          {...this.props.additionalMessageInputProps}
-        />
-      </React.Fragment>
-    );
-  }
-}
+    render() {
+      if (!this.props.thread) {
+        return null;
+      }
+
+      const read = {};
+      const headerComponent = (
+        <React.Fragment>
+          <Message
+            message={this.props.thread}
+            initialMessage
+            threadList
+            readOnly
+            groupStyles={['single']}
+            Message={this.props.Message}
+            // TODO: remove the following line in next release, since we already have additionalParentMessageProps now.
+            {...this.props}
+            {...this.props.additionalParentMessageProps}
+          />
+          <NewThread>
+            <NewThreadText>
+              {this.props.t('chat.message.startThread')}
+            </NewThreadText>
+          </NewThread>
+        </React.Fragment>
+      );
+
+      return (
+        <React.Fragment>
+          <MessageList
+            messages={this.props.threadMessages}
+            HeaderComponent={headerComponent}
+            read={read}
+            threadList
+            loadMore={this.props.loadMoreThread}
+            hasMore={this.props.threadHasMore}
+            loadingMore={this.props.threadLoadingMore}
+            Message={this.props.Message}
+            {...this.props.additionalMessageListProps}
+          />
+          <MessageInput
+            parent={this.props.thread}
+            focus={this.props.autoFocus}
+            {...this.props.additionalMessageInputProps}
+          />
+        </React.Fragment>
+      );
+    }
+  },
+);
 
 export { Thread };

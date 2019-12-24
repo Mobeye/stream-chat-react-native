@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import styled from '@stream-io/styled-components';
 import PropTypes from 'prop-types';
 import { Spinner } from './Spinner';
+import { withTranslationAndStatics } from '../utils';
 
 const LoadingText = styled.Text`
   margin-top: 20px;
@@ -10,45 +11,65 @@ const LoadingText = styled.Text`
   font-weight: 600;
 `;
 
-export class LoadingIndicator extends React.PureComponent {
-  static propTypes = {
-    listType: PropTypes.oneOf(['channel', 'message', 'default']),
-  };
+export const LoadingIndicator = withTranslationAndStatics()(
+  class LoadingIndicator extends React.PureComponent {
+    static propTypes = {
+      listType: PropTypes.oneOf(['channel', 'message', 'default']),
+    };
 
-  static defaultProps = {
-    listType: 'default',
-  };
+    static defaultProps = {
+      listType: 'default',
+    };
 
-  render() {
-    switch (this.props.listType) {
-      case 'channel':
-        return (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Spinner />
-            <LoadingText>Loading channels ...</LoadingText>
-          </View>
-        );
-      case 'message':
-        return (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Spinner />
-            <LoadingText>Loading messages ...</LoadingText>
-          </View>
-        );
-      case 'default':
-      default:
-        return (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Spinner />
-            <LoadingText>Loading ...</LoadingText>
-          </View>
-        );
+    render() {
+      switch (this.props.listType) {
+        case 'channel':
+          return (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Spinner />
+              <LoadingText>
+                {this.props.t('chat.loadingIndicator.channel')}
+              </LoadingText>
+            </View>
+          );
+        case 'message':
+          return (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Spinner />
+              <LoadingText>
+                {this.props.t('chat.loadingIndicator.message')}
+              </LoadingText>
+            </View>
+          );
+        case 'default':
+        default:
+          return (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Spinner />
+              <LoadingText>
+                {this.props.t('chat.loadingIndicator.default')}
+              </LoadingText>
+            </View>
+          );
+      }
     }
-  }
-}
+  },
+);

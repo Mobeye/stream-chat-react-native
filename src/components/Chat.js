@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { ChatContext } from '../context';
 import { NetInfo } from '../native';
 
 import { themed } from '../styles/theme';
+
+import 'moment/locale/fr';
 
 /**
  * Chat - Wrapper component for Chat. The needs to be placed around any other chat components.
@@ -35,6 +38,8 @@ export const Chat = themed(
        * */
       style: PropTypes.object,
       logger: PropTypes.func,
+      /** locale information for dates **/
+      locale: PropTypes.string,
     };
 
     static defaultProps = {
@@ -68,6 +73,8 @@ export const Chat = themed(
       });
 
       this._unmounted = false;
+
+      if (props.locale) moment.locale(props.locale);
     }
 
     componentDidMount() {

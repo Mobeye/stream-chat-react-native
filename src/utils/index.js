@@ -1,6 +1,9 @@
 import { MentionsItem } from '../components/MentionsItem';
 import { CommandsItem } from '../components/CommandsItem';
 
+import { withTranslation } from 'react-i18next';
+import hoistStatics from 'hoist-non-react-statics';
+
 export { renderText } from './renderText';
 
 export const emojiData = [
@@ -136,3 +139,12 @@ export const makeImageCompatibleUrl = (url) => {
 
   return newUrl;
 };
+
+export const withTranslationAndStatics = (ns, options = {}) => (component) =>
+  hoistStatics(
+    withTranslation(ns, {
+      withRef: true,
+      ...options,
+    })(component),
+    component,
+  );

@@ -3,6 +3,7 @@ import styled from '@stream-io/styled-components';
 import PropTypes from 'prop-types';
 
 import iconPath from '../../images/icons/icon_path.png';
+import { withTranslationAndStatics } from '../../utils';
 
 const Container = styled.TouchableOpacity`
   padding: 5px;
@@ -24,7 +25,7 @@ const MessageRepliesImage = styled.Image`
   ${({ theme }) => theme.message.replies.image.css}
 `;
 
-export const MessageReplies = ({ message, isThreadList, openThread, pos }) => {
+let MessageReplies = ({ message, isThreadList, openThread, pos, t }) => {
   if (isThreadList || !message.reply_count) return null;
 
   return (
@@ -33,7 +34,7 @@ export const MessageReplies = ({ message, isThreadList, openThread, pos }) => {
         <MessageRepliesImage source={iconPath} pos={pos} />
       ) : null}
       <MessageRepliesText>
-        {message.reply_count} {message.reply_count === 1 ? 'reply' : 'replies'}
+        {t('chat.repliesCount', { count: message.reply_count })}
       </MessageRepliesText>
       {pos === 'right' ? (
         <MessageRepliesImage source={iconPath} pos={pos} />
@@ -52,3 +53,6 @@ MessageReplies.propTypes = {
   /** right | left */
   pos: PropTypes.string,
 };
+
+MessageReplies = withTranslationAndStatics()(MessageReplies);
+export { MessageReplies };

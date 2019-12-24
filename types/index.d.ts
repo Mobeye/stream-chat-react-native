@@ -132,6 +132,7 @@ export interface ChatProps {
    * @ref https://getstream.io/chat/react-native-chat/tutorial/#custom-styles
    * */
   style?: object;
+  locale?: string;
 }
 
 export interface ChannelProps extends ChatContextValue {

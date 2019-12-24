@@ -1,18 +1,19 @@
 import React from 'react';
 import { Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { withTranslationAndStatics } from '../utils';
 
-export const LoadingErrorIndicator = ({ listType }) => {
+let LoadingErrorIndicator = ({ listType, t }) => {
   let Loader;
   switch (listType) {
     case 'channel':
-      Loader = <Text>Error loading channel list ...</Text>;
+      Loader = <Text>{t('chat.error.loadingError.channel')}</Text>;
       break;
     case 'message':
-      Loader = <Text>Error loading messages for this channel ...</Text>;
+      Loader = <Text>{t('chat.error.loadingError.message')}</Text>;
       break;
     default:
-      Loader = <Text>Error loading</Text>;
+      Loader = <Text>{t('chat.error.loadingError.default')}</Text>;
       break;
   }
 
@@ -22,3 +23,6 @@ export const LoadingErrorIndicator = ({ listType }) => {
 LoadingErrorIndicator.propTypes = {
   listType: PropTypes.oneOf(['channel', 'message', 'default']),
 };
+
+LoadingErrorIndicator = withTranslationAndStatics(LoadingErrorIndicator);
+export { LoadingErrorIndicator };
