@@ -6697,7 +6697,7 @@ stream-browserify@^2.0.1:
 
 stream-chat-react-native-core@Mobeye/stream-chat-react-native#stream-chat-react-native-core-v0.6.0-gitpkg:
   version "0.6.0"
-  resolved "https://codeload.github.com/Mobeye/stream-chat-react-native/tar.gz/ef814ba08dc4483b382126b82032d680cf30ad5c"
+  resolved "https://codeload.github.com/Mobeye/stream-chat-react-native/tar.gz/8eb0fdf69c41f260b420869db7c1d1f01d37032a"
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@stream-io/react-native-simple-markdown" "^1.1.1"
