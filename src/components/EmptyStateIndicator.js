@@ -19,5 +19,5 @@ let EmptyStateIndicator = ({ listType, t }) => {
   return Indicator;
 };
 
-EmptyStateIndicator = withTranslationAndStatics(EmptyStateIndicator);
+EmptyStateIndicator = withTranslationAndStatics()(EmptyStateIndicator);
 export { EmptyStateIndicator };
