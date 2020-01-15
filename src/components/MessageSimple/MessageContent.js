@@ -465,10 +465,10 @@ export const MessageContent = withTranslationAndStatics()(
               error={message.type === 'error' || message.status === 'failed'}
             >
               {message.type === 'error' ? (
-                <FailedText>ERROR · UNSENT</FailedText>
+                <FailedText>{this.props.t('chat.message.error')}</FailedText>
               ) : null}
               {message.status === 'failed' ? (
-                <FailedText>Message failed - try again</FailedText>
+                <FailedText>{this.props.t('chat.message.failure')}</FailedText>
               ) : null}
               {reactionsEnabled &&
                 message.latest_reactions &&
@@ -544,7 +544,7 @@ export const MessageContent = withTranslationAndStatics()(
               {!MessageFooter && showTime ? (
                 <MetaContainer>
                   <MetaText alignment={pos}>
-                    {moment(message.created_at).format('h:mmA')}
+                    {moment(message.created_at).format('HH:MM')}
                   </MetaText>
                 </MetaContainer>
               ) : null}
