@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Modal, Image, SafeAreaView } from 'react-native';
+import { Text, View, Modal, Image } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import PropTypes from 'prop-types';
 import styled from '@stream-io/styled-components';
@@ -80,6 +80,7 @@ export const Gallery = withTranslationAndStatics()(
           super(props);
           this.state = {
             viewerModalOpen: false,
+            pictureIndex: 0,
           };
         }
 
@@ -118,28 +119,24 @@ export const Gallery = withTranslationAndStatics()(
                     this.setState({ viewerModalOpen: false });
                   }}
                 >
-                  <SafeAreaView
-                    style={{ flex: 1, backgroundColor: 'transparent' }}
-                  >
-                    <ImageViewer
-                      imageUrls={images}
-                      // TODO: We don't have 'save image' functionality.
-                      // Until we do, lets disable this feature. saveToLocalByLongPress prop basically
-                      // opens up popup menu to with an option "Save to the album", which basically does nothing.
-                      saveToLocalByLongPress={false}
-                      onCancel={() => {
-                        this.setState({ viewerModalOpen: false });
-                      }}
-                      enableSwipeDown
-                      renderHeader={() => (
-                        <GalleryHeader
-                          handleDismiss={() => {
-                            this.setState({ viewerModalOpen: false });
-                          }}
-                        />
-                      )}
-                    />
-                  </SafeAreaView>
+                  <ImageViewer
+                    imageUrls={images}
+                    // TODO: We don't have 'save image' functionality.
+                    // Until we do, lets disable this feature. saveToLocalByLongPress prop basically
+                    // opens up popup menu to with an option "Save to the album", which basically does nothing.
+                    saveToLocalByLongPress={false}
+                    onCancel={() => {
+                      this.setState({ viewerModalOpen: false });
+                    }}
+                    enableSwipeDown
+                    renderHeader={() => (
+                      <GalleryHeader
+                        handleDismiss={() => {
+                          this.setState({ viewerModalOpen: false });
+                        }}
+                      />
+                    )}
+                  />
                 </Modal>
               </React.Fragment>
             );
@@ -157,7 +154,7 @@ export const Gallery = withTranslationAndStatics()(
                     length={images.length}
                     activeOpacity={0.8}
                     onPress={() => {
-                      this.setState({ viewerModalOpen: true });
+                      this.setState({ viewerModalOpen: true, pictureIndex: i });
                     }}
                     onLongPress={this.props.onLongPress}
                   >
@@ -221,24 +218,20 @@ export const Gallery = withTranslationAndStatics()(
                 visible={this.state.viewerModalOpen}
                 transparent={true}
               >
-                <SafeAreaView
-                  style={{ flex: 1, backgroundColor: 'transparent' }}
-                >
-                  <ImageViewer
-                    imageUrls={images}
-                    onCancel={() => {
-                      this.setState({ viewerModalOpen: false });
-                    }}
-                    enableSwipeDown
-                    renderHeader={() => (
-                      <GalleryHeader
-                        handleDismiss={() => {
-                          this.setState({ viewerModalOpen: false });
-                        }}
-                      />
-                    )}
-                  />
-                </SafeAreaView>
+                <ImageViewer
+                  imageUrls={images}
+                  onCancel={() => {
+                    this.setState({ viewerModalOpen: false });
+                  }}
+                  enableSwipeDown
+                  renderHeader={() => (
+                    <GalleryHeader
+                      handleDismiss={() => {
+                        this.setState({ viewerModalOpen: false });
+                      }}
+                    />
+                  )}
+                />
               </Modal>
             </React.Fragment>
           );
