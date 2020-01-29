@@ -220,6 +220,7 @@ export const Gallery = withTranslationAndStatics()(
               >
                 <ImageViewer
                   imageUrls={images}
+                  index={this.state.pictureIndex}
                   onCancel={() => {
                     this.setState({ viewerModalOpen: false });
                   }}
